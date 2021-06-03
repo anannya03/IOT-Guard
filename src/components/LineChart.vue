@@ -37,7 +37,7 @@ export default {
     this.renderChart(this.chartData, this.options)
   },
   created() {
-    axios.get(`http://127.0.0.1:8400/values/`)
+    axios.get(`https://fast-api-demo-api.herokuapp.com/values/`)
       .then(response => {
         // JSON responses are automatically parsed.
         const responseData = response.data
