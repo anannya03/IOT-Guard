@@ -2,17 +2,11 @@
 
 **_An interactive dashboard for an IoT Indoor Air Quality (IAQ) monitoring system powered by Arduino Uno._**
 
-> Data is fetched from the Arduino Uno and MQ sensors and is delivered through the <insert backend repo URL> back end.
+> Data is fetched from the Arduino Uno and MQ sensors and is delivered through the back end https://github.com/anannya03/IAQ-Monitor-API.
 
 <p align="center">
-  <img src="Screenshot.jpg">
+  <img src="screenshot.png">
 </p>
-
-## Live Demo
-
-<add deploy status>
-
-Access the live demo here: <add demo URL>
 
 ## Getting Started
 
@@ -27,8 +21,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Resources
 
-- Styling with [Bulma](https://bulma.io/)
-- Icons from [The Noun Project](https://thenounproject.com/)
+- Styling with [Bulma.css](https://bulma.io/)
+- Icons from [FontAwesome](https://fontawesome.com/)
 
 ## Contributing
 
