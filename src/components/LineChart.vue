@@ -5,8 +5,122 @@ import axios from "axios";
 export default {
   extends: Line,
   mixins: [mixins.reactiveData],
+  methods: {
+    makeRequest() {
+      // make a GET request to get the last 15 values
+      axios
+        .get(`https://iaq-monitor-api.herokuapp.com/latestValues/`)
+        .then((response) => {
+          // JSON responses are automatically parsed.
+          const responseData = response.data;
+          console.log(responseData);
+          // create the chart
+          this.chartData = {
+            labels: responseData.map(function(i) {
+              return i.Date_Time.split(" ")[1];
+            }),
+            datasets: [
+              // CO2 gas dataset
+              {
+                label: "CO2",
+                borderColor: "#d8b384",
+                borderWidth: 4,
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#d8b384",
+                data: responseData.map((item) => item.CO2),
+              },
+              // Toluene gas dataset
+              {
+                label: "Toluene",
+                borderColor: "#f54748",
+                borderWidth: 4,
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#f54748",
+                data: responseData.map((item) => item.Toluene),
+              },
+              // NH4 gas dataset
+              {
+                label: "NH4",
+                borderColor: "#ff8474",
+                borderWidth: 4,
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#ff8474",
+                data: responseData.map((item) => item.NH4),
+              },
+              // Acetone gas dataset
+              {
+                label: "Acetone",
+                borderColor: "#8e9775",
+                borderWidth: 4,
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#8e9775",
+                data: responseData.map((item) => item.Acetone),
+              },
+              // H2 gas dataset
+              {
+                label: "H2",
+                borderWidth: 4,
+                borderColor: "#cee5d0",
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#cee5d0",
+                data: responseData.map((item) => item.H2),
+              },
+              // LPG gas dataset
+              {
+                label: "LPG",
+                borderWidth: 4,
+                borderColor: "#325288",
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#325288",
+                data: responseData.map((item) => item.LPG),
+              },
+              // CH4 gas dataset
+              {
+                label: "CH4",
+                borderWidth: 4,
+                borderColor: "#4a503d",
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#4a503d",
+                data: responseData.map((item) => item.CH4),
+              },
+              // CO gas dataset
+              {
+                label: "CO",
+                borderWidth: 4,
+                borderColor: "#e28f83",
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#e28f83",
+                data: responseData.map((item) => item.CO),
+              },
+              // Alcohol gas dataset
+              {
+                label: "Alcohol",
+                borderColor: "#907fa4",
+                borderWidth: 4,
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#907fa4",
+                data: responseData.map((item) => item.Alcohol),
+              },
+            ],
+          };
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
   data() {
     return {
+      timer: null,
       chartData: "",
       // set chart options
       options: {
@@ -48,6 +162,7 @@ export default {
         },
         responsive: true,
         maintainAspectRatio: false,
+        animation: true,
       },
     };
   },
@@ -56,44 +171,12 @@ export default {
     this.renderChart(this.chartData, this.options);
   },
   created() {
-    axios
-      .get(`https://fast-api-demo-api.herokuapp.com/values/`)
-      .then((response) => {
-        // JSON responses are automatically parsed.
-        const responseData = response.data;
-        console.log(responseData);
-        // create the chart
-        this.chartData = {
-          labels: responseData.map((item) => item.facts),
-          datasets: [
-            // dataset 1
-            {
-              label: "MQ2 Values",
-              borderColor: "#1A3850",
-              borderWidth: 2,
-              fill: false,
-              lineTension: 0,
-              backgroundColor: "#1A3850",
-              data: responseData.map((item) => item.MQ2_value),
-            },
-            // dataset 2
-            {
-              label: "MQ7 Values",
-              borderColor: "#9D2929",
-              borderWidth: 2,
-              fill: false,
-              lineTension: 0,
-              backgroundColor: "#9D2929",
-              data: responseData.map((item) => item.MQ7_value),
-            },
-          ],
-        };
-      })
-      .catch((e) => {
-        this.errors.push(e);
-      });
+    this.timer = setInterval(() => {
+      this.makeRequest();
+    }, 11000);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
 };
 </script>
-
-<style scoped></style>

@@ -1,8 +1,8 @@
 <template>
   <div class="section is-vcentered">
     <Header />
-    <div class="container">
-      <line-chart />
+    <div class="container graph-container has-text-centered mt-5">
+      <LineChart />
     </div>
     <Footer />
   </div>
@@ -28,5 +28,8 @@ export default {
 .section {
   min-height: 100vh !important;
   background-color: #faf6e9;
+}
+.graph-container {
+  max-width: 60rem !important;
 }
 </style>

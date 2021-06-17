@@ -75,7 +75,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .button {
   border: none;
   box-shadow: -0.3rem 0.3rem 0 0 #ece8d9;
